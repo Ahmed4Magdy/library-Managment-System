@@ -1,11 +1,15 @@
 package com.example.demo.service;
 
+import com.example.demo.Dto.MemberDto;
 import com.example.demo.entity.Member;
+import com.example.demo.mapper.MemberMapper;
 import com.example.demo.repo.MemberRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MemberService {
@@ -13,41 +17,46 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
 
+    private final MemberMapper memberMapper;
 
-    public MemberService(MemberRepository memberRepository) {
+    public MemberService(MemberRepository memberRepository, MemberMapper memberMapper) {
         this.memberRepository = memberRepository;
+        this.memberMapper = memberMapper;
     }
 
-    public Member addMember(Member member) {
-        return memberRepository.save(member);
+    public MemberDto addMember(MemberDto dto) {
+
+        Member exist = memberMapper.toEntity(dto);
+        exist.setMembership_date(LocalDate.now());
+
+        Member saved = memberRepository.save(exist);
+        return memberMapper.toDto(saved);
+
     }
 
-    public Member updateMember(Long id, Member member) {
+    public MemberDto updateMember(Long id, MemberDto dto) {
 
-        Optional<Member> existmemeber = memberRepository.findById(id);
+        Member existmemeber = memberRepository.findById(id).orElseThrow(() -> new RuntimeException("member not found with " + id));
 
-        if (existmemeber.isPresent()) {
+        memberMapper.updateMemberFromDto(dto, existmemeber);
 
-            Member existing = existmemeber.get();
-            existing.setFull_name(member.getFull_name());
-            existing.setEmail(member.getEmail());
-            existing.setPhone(member.getPhone());
-            existing.setAddress(member.getAddress());
-            return memberRepository.save(existing);
-        }
-        throw new RuntimeException("memeber no found id " + id);
+        Member saved = memberRepository.save(existmemeber);
+        return memberMapper.toDto(saved);
+
     }
 
     public void deleteMember(Long id) {
         memberRepository.deleteById(id);
     }
 
-    public Optional<Member> getMemberById(Long id) {
-        return memberRepository.findById(id);
+    public MemberDto getMemberById(Long id) {
+
+        Member saved = memberRepository.findById(id).orElseThrow(() -> new RuntimeException("member not found with " + id));
+        return memberMapper.toDto(saved);
     }
 
-    public List<Member> getAllMembers() {
-        return memberRepository.findAll();
+    public List<MemberDto> getAllMembers() {
+        return memberRepository.findAll().stream().map(memberMapper::toDto).collect(Collectors.toList());
     }
 }
 

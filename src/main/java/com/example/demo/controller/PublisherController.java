@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.Dto.PublisherDto;
 import com.example.demo.entity.Publisher;
 import com.example.demo.repo.PublisherRepository;
 import com.example.demo.service.PublisherService;
@@ -23,13 +24,13 @@ public class PublisherController {
 
 
     @PostMapping("/add")
-    public Publisher addPublisher(@RequestBody Publisher publisher) {
+    public PublisherDto addPublisher(@RequestBody PublisherDto publisher) {
         return publisherService.addPublisher(publisher);
     }
 
 
     @PutMapping("/{id}")
-    public Publisher updatePublisher(@PathVariable Long id, @RequestBody Publisher publisher) {
+    public PublisherDto updatePublisher(@PathVariable Long id, @RequestBody PublisherDto publisher) {
 
         return publisherService.updatePublisher(id, publisher);
 
@@ -45,14 +46,14 @@ public class PublisherController {
 
 
     @GetMapping("/{id}")
-    public Optional<Publisher> getPublisherById(@PathVariable Long id) {
+    public PublisherDto getPublisherById(@PathVariable Long id) {
 
         return publisherService.getPublisherById(id);
 
     }
 
 @GetMapping("")
-    public List<Publisher> getAllPublisher() {
+    public List<PublisherDto> getAllPublisher() {
 
         return publisherService.getAllPublisher();
     }

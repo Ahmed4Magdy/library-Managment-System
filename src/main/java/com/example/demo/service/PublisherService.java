@@ -1,44 +1,55 @@
 package com.example.demo.service;
 
 
+import com.example.demo.Dto.AuthorDto;
+import com.example.demo.Dto.PublisherDto;
+import com.example.demo.entity.Author;
 import com.example.demo.entity.Category;
 import com.example.demo.entity.Publisher;
+import com.example.demo.mapper.PublisherMapper;
 import com.example.demo.repo.PublisherRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PublisherService {
 
-     private final PublisherRepository publisherRepository;
+    private final PublisherRepository publisherRepository;
 
+    private final PublisherMapper publisherMapper;
 
-    public PublisherService(PublisherRepository publisherRepository) {
+    public PublisherService(PublisherRepository publisherRepository, PublisherMapper publisherMapper) {
         this.publisherRepository = publisherRepository;
+        this.publisherMapper = publisherMapper;
     }
 
 
+    public PublisherDto addPublisher(PublisherDto dto) {
 
-    public Publisher addPublisher(Publisher publisher) {
-        return publisherRepository.save(publisher);
+        Publisher exist = publisherMapper.toEntity(dto);
+
+        Publisher saved = publisherRepository.save(exist);
+
+        return publisherMapper.toDto(saved);
+
+
     }
 
 
-    public Publisher updatePublisher(Long id, Publisher publisher) {
+    public PublisherDto updatePublisher(Long id, PublisherDto dto) {
 
-        Optional<Publisher> existpublisher = publisherRepository.findById(id);
+        Publisher existpublisher = publisherRepository.findById(id).orElseThrow(() -> new RuntimeException("not found publisher with id" + id));
 
-        if (existpublisher.isPresent()) {
-            Publisher existing = existpublisher.get();
+        publisherMapper.updatePublisherFromDto(dto, existpublisher);
 
-            existing.setName(publisher.getName());
-            return publisherRepository.save(existing);
 
-        }
+        Publisher saved = publisherRepository.save(existpublisher);
 
-        throw new RuntimeException("publisher not found id " + id);
+        return publisherMapper.toDto(saved);
+
 
     }
 
@@ -50,19 +61,18 @@ public class PublisherService {
     }
 
 
-    public Optional<Publisher> getPublisherById(Long id) {
+    public PublisherDto getPublisherById(Long id) {
 
-        return publisherRepository.findById(id);
+        Publisher saved = publisherRepository.findById(id).orElseThrow(() -> new RuntimeException("publisher not found with id " + id));
 
+        return publisherMapper.toDto(saved);
     }
 
 
-    public List<Publisher> getAllPublisher() {
+    public List<PublisherDto> getAllPublisher() {
 
-        return publisherRepository.findAll();
+        return publisherRepository.findAll().stream().map(publisherMapper::toDto).collect(Collectors.toList());
     }
-
-
 
 
 }

@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.Dto.CategoryDto;
 import com.example.demo.entity.Category;
 import com.example.demo.service.CategoryService;
 import org.springframework.web.bind.annotation.*;
@@ -21,15 +22,15 @@ public class CategoryController {
 
 
     @PostMapping("/add")
-    public Category addCategory(@RequestBody Category category) {
-        return categoryService.addCategory(category);
+    public CategoryDto addCategory(@RequestBody CategoryDto dto) {
+        return categoryService.addCategory(dto);
     }
 
 
     @PutMapping("/{id}")
-    public Category updateCategory(@PathVariable Long id, @RequestBody Category category) {
+    public CategoryDto updateCategory(@PathVariable Long id, @RequestBody CategoryDto dto) {
 
-        return categoryService.updateCategory(id, category);
+        return categoryService.updateCategory(id, dto);
 
     }
 
@@ -41,7 +42,7 @@ public class CategoryController {
 
 
     @GetMapping("/{id}")
-    public Optional<Category> getCategoryById(@PathVariable Long id) {
+    public CategoryDto getCategoryById(@PathVariable Long id) {
 
         return categoryService.getCategoryById(id);
 
@@ -49,7 +50,7 @@ public class CategoryController {
 
 
     @GetMapping("")
-    public List<Category> getAllCategories() {
+    public List<CategoryDto> getAllCategories() {
 
         return categoryService.getAllCategories();
     }

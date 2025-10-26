@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.Dto.MemberDto;
 import com.example.demo.entity.Member;
 import com.example.demo.service.MemberService;
 import org.springframework.web.bind.annotation.*;
@@ -20,12 +21,12 @@ public class MemberController {
 
 
     @PostMapping("/add")
-    public Member addMember(@RequestBody Member member) {
+    public MemberDto addMember(@RequestBody MemberDto member) {
         return memberService.addMember(member);
     }
 
     @PutMapping("/{id}")
-    public Member updateMember(@PathVariable Long id,@RequestBody Member member) {
+    public MemberDto updateMember(@PathVariable Long id,@RequestBody MemberDto member) {
 
         return memberService.updateMember(id, member);
     }
@@ -36,12 +37,12 @@ public class MemberController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Member> getMemberById(@PathVariable Long id) {
+    public MemberDto getMemberById(@PathVariable Long id) {
         return memberService.getMemberById(id);
     }
 
     @GetMapping("")
-    public List<Member> getAllMembers() {
+    public List<MemberDto> getAllMembers() {
         return memberService.getAllMembers();
     }
 

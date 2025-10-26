@@ -1,10 +1,10 @@
 package com.example.demo.service;
 
 
-import com.example.demo.Dto.BookRequest;
+import com.example.demo.Dto.BookDto;
 import com.example.demo.entity.Book;
-import com.example.demo.entity.Category;
 import com.example.demo.entity.Publisher;
+import com.example.demo.mapper.BookMapper;
 import com.example.demo.repo.AuthorRepository;
 import com.example.demo.repo.BookRepository;
 import com.example.demo.repo.CategoryRepository;
@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class BookService {
@@ -23,64 +24,46 @@ public class BookService {
     private final PublisherRepository publisherRepository;
     private final AuthorRepository authorRepository;
     private final CategoryRepository categoryRepository;
+    private final BookMapper bookMapper;
 
     public BookService(BookRepository bookRepository,
                        PublisherRepository publisherRepository,
                        AuthorRepository authorRepository,
-                       CategoryRepository categoryRepository) {
+                       CategoryRepository categoryRepository, BookMapper bookMapper) {
         this.bookRepository = bookRepository;
         this.publisherRepository = publisherRepository;
         this.authorRepository = authorRepository;
         this.categoryRepository = categoryRepository;
+        this.bookMapper = bookMapper;
     }
 
 
-    public Book addbook(BookRequest request) {
-        Book book = new Book();
-        book.setTitle(request.getTitle());
-        book.setIsbn(request.getIsbn());
-        book.setEdition(request.getEdition());
-        book.setLanguage(request.getLanguage());
-        book.setPublicationYear(request.getPublicationYear());
-        book.setSummary(request.getSummary());
-        book.setCoverImage(request.getCoverImageUrl());
-        // request.getpushihid معناه ان اقيمه ال حطيتها بتاعت واحد هروح اشوفها موجوده ولا لا علشان لو موجوده هحطها ف البوك
-        Publisher publisher = publisherRepository.findById(request.getPublisherId()).orElseThrow(() -> new RuntimeException("Publisher not found"));
-        book.setPublisher(publisher);
-        book.setAuthors(new HashSet<>(authorRepository.findAllById(request.getAuthorIds())));
-
-        // Categories
-        book.setCategories(new HashSet<>(categoryRepository.findAllById(request.getCategoryIds())));
+    public BookDto addbook(BookDto dto) {
 
 
-        return bookRepository.save(book);
+        Book exist = bookMapper.toEntity(dto);
+
+        Publisher publisher = publisherRepository.findById(dto.getPublisherId())
+                .orElseThrow(() -> new RuntimeException("Publisher not found"));
+
+        exist.setPublisher(publisher);
+
+        Book saved = bookRepository.save(exist);
+
+        return bookMapper.toDto(saved);
 
     }
 
 
-    public Book updateBook(Long id, Book book) {
+    public BookDto updateBook(Long id, BookDto dto) {
 
-        Optional<Book> existbook = bookRepository.findById(id);
 
-        if (existbook.isPresent()) {
-            Book existing = existbook.get();
+        Book existing = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("no book with id" + id));
 
-            existing.setTitle(book.getTitle());
-            existing.setIsbn(book.getIsbn());
-            existing.setEdition(book.getEdition());
-            existing.setLanguage(book.getLanguage());
-            existing.setLanguage(book.getLanguage());
-            existing.setPublicationYear(book.getPublicationYear());
-            existing.setSummary(book.getSummary());
-            existing.setCoverImage(book.getCoverImage());
-            existing.setPublisher(book.getPublisher());
-            existing.setAuthors(book.getAuthors());
-            existing.setCategories(book.getCategories());
-            return bookRepository.save(existing);
+        bookMapper.updateBookFromDto(dto, existing);
+        Book saved = bookRepository.save(existing);
+        return bookMapper.toDto(saved);
 
-        }
-
-        throw new RuntimeException("book not found id " + id);
 
     }
 
@@ -92,16 +75,17 @@ public class BookService {
     }
 
 
-    public Optional<Book> getbookyById(Long id) {
+    public BookDto getbookyById(Long id) {
 
-        return bookRepository.findById(id);
+        Book saved = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("no book with id" + id));
+        return bookMapper.toDto(saved);
 
     }
 
 
-    public List<Book> getAllBook() {
+    public List<BookDto> getAllBook() {
 
-        return bookRepository.findAll();
+        return bookRepository.findAll().stream().map(bookMapper::toDto).collect(Collectors.toList());
     }
 
 

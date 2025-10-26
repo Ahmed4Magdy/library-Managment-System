@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.Dto.AuthorDto;
 import com.example.demo.entity.Author;
 import com.example.demo.service.AuthorService;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class AuthorController {
 
 
     @PostMapping("/add")
-    public Author addAuthor(@RequestBody Author author) {
+    public AuthorDto addAuthor(@RequestBody AuthorDto author) {
 
         return authorService.addAuthor(author);
     }
@@ -31,7 +32,7 @@ public class AuthorController {
 
 
     @GetMapping("/{id}")
-    public Optional<Author> findById(@PathVariable Long id) {
+    public AuthorDto findById(@PathVariable Long id) {
 
         return authorService.findById(id);
 
@@ -40,7 +41,7 @@ public class AuthorController {
 
 
     @PutMapping("/{id}")
-    public Author updateAuthor(@PathVariable Long id,@RequestBody Author author) {
+    public AuthorDto updateAuthor(@PathVariable Long id,@RequestBody AuthorDto author) {
 
         return authorService.updateAuthor(id, author);
 
@@ -54,7 +55,7 @@ public class AuthorController {
 
 
     @GetMapping("")
-    public List<Author> findAll() {
+    public List<AuthorDto> findAll() {
         return authorService.findAll();
     }
 

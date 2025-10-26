@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.Dto.BookRequest;
+import com.example.demo.Dto.BookDto;
 import com.example.demo.entity.Book;
 import com.example.demo.service.BookService;
 import org.springframework.web.bind.annotation.*;
@@ -21,15 +21,15 @@ public class BookController {
 
 
     @PostMapping("/add")
-    public Book addbook(@RequestBody BookRequest request) {
+    public BookDto addbook(@RequestBody BookDto request) {
         return bookService.addbook(request);
     }
 
 
     @PutMapping("/{id}")
-    public Book updateBook(@PathVariable Long id, @RequestBody Book book) {
+    public BookDto updateBook(@PathVariable Long id, @RequestBody BookDto dto) {
 
-        return bookService.updateBook(id, book);
+        return bookService.updateBook(id, dto);
 
 
     }
@@ -44,7 +44,7 @@ public class BookController {
 
 
     @GetMapping("/{id}")
-    public Optional<Book> getbookyById(@PathVariable Long id) {
+    public BookDto getbookyById(@PathVariable Long id) {
 
         return bookService.getbookyById(id);
 
@@ -52,7 +52,7 @@ public class BookController {
 
 
     @GetMapping("")
-    public List<Book> getAllBook() {
+    public List<BookDto> getAllBook() {
 
         return bookService.getAllBook();
     }

@@ -1,11 +1,14 @@
 package com.example.demo.service;
 
+import com.example.demo.Dto.CategoryDto;
 import com.example.demo.entity.Category;
+import com.example.demo.mapper.CategoryMapper;
 import com.example.demo.repo.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
@@ -13,31 +16,47 @@ public class CategoryService {
 
     private final CategoryRepository categoryrepository;
 
+    private final CategoryMapper categoryMapper;
 
-    public CategoryService(CategoryRepository categoryrepository) {
+    public CategoryService(CategoryRepository categoryrepository, CategoryMapper categoryMapper) {
         this.categoryrepository = categoryrepository;
+        this.categoryMapper = categoryMapper;
     }
 
 
-    public Category addCategory(Category category) {
-        return categoryrepository.save(category);
+    public CategoryDto addCategory(CategoryDto dto) {
+
+        Category category = categoryMapper.toEntity(dto);
+
+        if (dto.getParentId() != null) {
+            Category parent = categoryrepository.findById(dto.getParentId()).orElseThrow(() -> new RuntimeException("Category parent not found"));
+            category.setParent(parent);
+        }
+        Category saved = categoryrepository.save(category);
+        return categoryMapper.toDto(saved);
+
+
     }
 
 
-    public Category updateCategory(Long id, Category category) {
+    public CategoryDto updateCategory(Long id, CategoryDto dto) {
 
-        Optional<Category> existCategory = categoryrepository.findById(id);
+        Category existCategory = categoryrepository.findById(id).orElseThrow(() -> new RuntimeException("Category not found with ID"));
 
-        if (existCategory.isPresent()) {
-            Category existing = existCategory.get();
+        existCategory.setName(dto.getName());
 
-            existing.setName(category.getName());
-            existing.setParent(category.getParent());
-            return categoryrepository.save(existing);
-
+        if (dto.getParentId() != null) {
+            Category parent = categoryrepository.findById(dto.getParentId())
+                    .orElseThrow(() -> new RuntimeException("Parent category not found with ID: " + dto.getParentId()));
+            existCategory.setParent(parent);
+        } else {
+            existCategory.setParent(null);
         }
 
-        throw new RuntimeException("category not found id " + id);
+        Category saved = categoryrepository.save(existCategory);
+
+        return categoryMapper.toDto(saved);
+
 
     }
 
@@ -49,18 +68,20 @@ public class CategoryService {
     }
 
 
-    public Optional<Category> getCategoryById(Long id) {
+    public CategoryDto getCategoryById(Long id) {
 
-        return categoryrepository.findById(id);
+        Category saved = categoryrepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Category not found with ID: " + id));
+
+        return categoryMapper.toDto(saved);
 
     }
 
 
-    public List<Category> getAllCategories() {
+    public List<CategoryDto> getAllCategories() {
 
-        return categoryrepository.findAll();
+        return categoryrepository.findAll().stream().map(categoryMapper::toDto).collect(Collectors.toList());
     }
-
 
 
 }

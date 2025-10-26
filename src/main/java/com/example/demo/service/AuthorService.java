@@ -1,12 +1,15 @@
 package com.example.demo.service;
 
 
+import com.example.demo.Dto.AuthorDto;
 import com.example.demo.entity.Author;
+import com.example.demo.mapper.AuthorMapper;
 import com.example.demo.repo.AuthorRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthorService {
@@ -14,35 +17,38 @@ public class AuthorService {
 
     private final AuthorRepository authorRepository;
 
+    private final AuthorMapper authorMapper;
 
-    public AuthorService(AuthorRepository authorRepository) {
+    public AuthorService(AuthorRepository authorRepository, AuthorMapper authorMapper) {
         this.authorRepository = authorRepository;
+        this.authorMapper = authorMapper;
     }
 
 
-    public Author addAuthor(Author author) {
+    public AuthorDto addAuthor(AuthorDto dto) {
 
-        return authorRepository.save(author);
+        Author author = authorMapper.toEntity(dto);
+        Author saved = authorRepository.save(author);
+        return authorMapper.toDto(saved);
+
     }
 
-    public Author updateAuthor(Long id, Author author) {
+    public AuthorDto updateAuthor(Long id, AuthorDto dto) {
 
-        Optional<Author> existAuthor = authorRepository.findById(id);
+        Author existAuthor = authorRepository.findById(id).orElseThrow(() -> new RuntimeException("not found author with id " + id));
 
-        if (existAuthor.isPresent()) {
-            Author existing = existAuthor.get();
+        Author saved = authorRepository.save(existAuthor);
 
-            existing.setName(author.getName());
-            return authorRepository.save(existing);
-        }
+        return authorMapper.toDto(saved);
 
-        throw new RuntimeException("Author not found id " + id);
     }
 
 
-    public Optional<Author> findById(Long id) {
+    public AuthorDto findById(Long id) {
 
-        return authorRepository.findById(id);
+        Author saved = authorRepository.findById(id).orElseThrow(() -> new RuntimeException("not found author with id " + id));
+
+        return authorMapper.toDto(saved);
 
     }
 
@@ -52,9 +58,8 @@ public class AuthorService {
     }
 
 
-
-    public List<Author> findAll(){
-        return authorRepository.findAll();
+    public List<AuthorDto> findAll() {
+        return authorRepository.findAll().stream().map(authorMapper::toDto).collect(Collectors.toList());
     }
 
 
