@@ -1,19 +1,16 @@
 package com.example.demo.controller;
 
 import com.example.demo.Dto.BorrowTransactionDto;
-import com.example.demo.entity.BorrowTransaction;
-import com.example.demo.service.BorrowTransactionService;
+import com.example.demo.service.impl.BorrowTransactionServiceimpl;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/borrowwtrasaction")
 public class BorrowTransactionController {
 
-    private final BorrowTransactionService borrowTransactionService;
+    private final BorrowTransactionServiceimpl borrowTransactionService;
 
-    public BorrowTransactionController(BorrowTransactionService borrowTransactionService) {
+    public BorrowTransactionController(BorrowTransactionServiceimpl borrowTransactionService) {
         this.borrowTransactionService = borrowTransactionService;
     }
 

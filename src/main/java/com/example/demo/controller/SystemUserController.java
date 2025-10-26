@@ -2,22 +2,20 @@ package com.example.demo.controller;
 
 
 import com.example.demo.Dto.SystemUserDto;
-import com.example.demo.entity.SystemUser;
-import com.example.demo.service.SystemUserService;
+import com.example.demo.service.impl.SystemUserServiceimpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/systemuser")
 public class SystemUserController {
 
 
-    private final SystemUserService systemUserService;
+    private final SystemUserServiceimpl systemUserService;
 
 
-    public SystemUserController(SystemUserService systemUserService) {
+    public SystemUserController(SystemUserServiceimpl systemUserService) {
         this.systemUserService = systemUserService;
     }
 

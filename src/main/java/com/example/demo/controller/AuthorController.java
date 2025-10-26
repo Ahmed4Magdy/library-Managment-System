@@ -2,22 +2,20 @@ package com.example.demo.controller;
 
 
 import com.example.demo.Dto.AuthorDto;
-import com.example.demo.entity.Author;
-import com.example.demo.service.AuthorService;
+import com.example.demo.service.impl.AuthorServiceimpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/author")
 public class AuthorController {
 
 
-    private final AuthorService authorService;
+    private final AuthorServiceimpl authorService;
 
 
-    public AuthorController(AuthorService authorService) {
+    public AuthorController(AuthorServiceimpl authorService) {
         this.authorService = authorService;
     }
 

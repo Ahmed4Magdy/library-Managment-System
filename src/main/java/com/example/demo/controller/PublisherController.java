@@ -2,23 +2,20 @@ package com.example.demo.controller;
 
 
 import com.example.demo.Dto.PublisherDto;
-import com.example.demo.entity.Publisher;
-import com.example.demo.repo.PublisherRepository;
-import com.example.demo.service.PublisherService;
+import com.example.demo.service.impl.PublisherServiceimpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/publihser")
 public class PublisherController {
 
 
-    private final PublisherService publisherService;
+    private final PublisherServiceimpl publisherService;
 
 
-    public PublisherController(PublisherService publisherService) {
+    public PublisherController(PublisherServiceimpl publisherService) {
         this.publisherService = publisherService;
     }
 

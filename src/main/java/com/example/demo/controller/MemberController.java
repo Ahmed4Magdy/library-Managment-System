@@ -1,21 +1,19 @@
 package com.example.demo.controller;
 
 import com.example.demo.Dto.MemberDto;
-import com.example.demo.entity.Member;
-import com.example.demo.service.MemberService;
+import com.example.demo.service.impl.MemberServiceimpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/member")
 public class MemberController {
 
-    private final MemberService memberService;
+    private final MemberServiceimpl memberService;
 
 
-    public MemberController(MemberService memberService) {
+    public MemberController(MemberServiceimpl memberService) {
         this.memberService = memberService;
     }
 

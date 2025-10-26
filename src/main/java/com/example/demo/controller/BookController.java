@@ -1,21 +1,19 @@
 package com.example.demo.controller;
 
 import com.example.demo.Dto.BookDto;
-import com.example.demo.entity.Book;
-import com.example.demo.service.BookService;
+import com.example.demo.service.impl.BookServiceimpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/book")
 public class BookController {
 
 
-    private final BookService bookService;
+    private final BookServiceimpl bookService;
 
-    public BookController(BookService bookService) {
+    public BookController(BookServiceimpl bookService) {
         this.bookService = bookService;
     }
 

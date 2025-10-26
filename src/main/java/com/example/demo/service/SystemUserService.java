@@ -1,70 +1,22 @@
 package com.example.demo.service;
 
 import com.example.demo.Dto.SystemUserDto;
-import com.example.demo.entity.Member;
 import com.example.demo.entity.SystemUser;
-import com.example.demo.mapper.SystemUserMapper;
-import com.example.demo.repo.SystemUserRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service
-public class SystemUserService {
-
-    private final SystemUserRepository systemUserRepository;
-
-    private final PasswordEncoder passwordEncoder;
-
-    private final SystemUserMapper systemUserMapper;
+public interface SystemUserService {
 
 
+    public SystemUserDto addSystemUser(SystemUserDto dto);
 
-    public SystemUserService(SystemUserRepository systemUserRepository, PasswordEncoder passwordEncoder, SystemUserMapper systemUserMapper) {
-        this.systemUserRepository = systemUserRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.systemUserMapper = systemUserMapper;
-    }
+    public SystemUserDto updateSystemUser(Long id, SystemUserDto dto);
 
+    public void deleteSystemUser(Long id);
 
-    public SystemUserDto addSystemUser(SystemUserDto dto) {
+    public SystemUserDto getSystemUserById(Long id);
 
-        SystemUser exist = systemUserMapper.toEntity(dto);
-        SystemUser saved = systemUserRepository.save(exist);
-        return systemUserMapper.toDto(saved);
+    public List<SystemUserDto> getAllSystemUsers();
 
-    }
-
-
-    public SystemUserDto updateSystemUser(Long id, SystemUserDto dto) {
-
-        SystemUser existSystemUser = systemUserRepository.findById(id).orElseThrow(() -> new RuntimeException("systemuser not found with " + id));
-
-        systemUserMapper.updateSystemUserFromtodto(dto, existSystemUser);
-
-        SystemUser saved = systemUserRepository.save(existSystemUser);
-
-        return systemUserMapper.toDto(saved);
-
-    }
-
-    public void deleteSystemUser(Long id) {
-        systemUserRepository.deleteById(id);
-    }
-
-    public SystemUserDto getSystemUserById(Long id) {
-        SystemUser saved = systemUserRepository.findById(id).orElseThrow(() -> new RuntimeException("systemuser not found with " + id));
-        return systemUserMapper.toDto(saved);
-    }
-
-    public List<SystemUserDto> getAllSystemUsers() {
-        return systemUserRepository.findAll().stream().map(systemUserMapper::toDto).collect(Collectors.toList());
-    }
 }
-
-
-
-

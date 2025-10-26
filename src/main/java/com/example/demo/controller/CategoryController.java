@@ -2,21 +2,19 @@ package com.example.demo.controller;
 
 
 import com.example.demo.Dto.CategoryDto;
-import com.example.demo.entity.Category;
-import com.example.demo.service.CategoryService;
+import com.example.demo.service.impl.CategoryServiceimpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
 
 
-    private final CategoryService categoryService;
+    private final CategoryServiceimpl categoryService;
 
-    public CategoryController(CategoryService categoryService) {
+    public CategoryController(CategoryServiceimpl categoryService) {
         this.categoryService = categoryService;
     }
 
