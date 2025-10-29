@@ -4,13 +4,14 @@ import com.example.demo.Dto.CategoryDto;
 import com.example.demo.entity.Category;
 import com.example.demo.mapper.CategoryMapper;
 import com.example.demo.repo.CategoryRepository;
+import com.example.demo.service.CategoryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class CategoryServiceimpl {
+public class CategoryServiceimpl implements CategoryService {
 
 
     private final CategoryRepository categoryrepository;

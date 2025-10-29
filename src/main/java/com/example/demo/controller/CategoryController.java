@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 
 import com.example.demo.Dto.CategoryDto;
+import com.example.demo.service.CategoryService;
 import com.example.demo.service.impl.CategoryServiceimpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,9 +13,9 @@ import java.util.List;
 public class CategoryController {
 
 
-    private final CategoryServiceimpl categoryService;
+    private final CategoryService categoryService;
 
-    public CategoryController(CategoryServiceimpl categoryService) {
+    public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 

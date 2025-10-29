@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.Dto.BookDto;
+import com.example.demo.service.BookService;
 import com.example.demo.service.impl.BookServiceimpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,9 +12,9 @@ import java.util.List;
 public class BookController {
 
 
-    private final BookServiceimpl bookService;
+    private final BookService bookService;
 
-    public BookController(BookServiceimpl bookService) {
+    public BookController(BookService bookService) {
         this.bookService = bookService;
     }
 

@@ -5,13 +5,14 @@ import com.example.demo.Dto.AuthorDto;
 import com.example.demo.entity.Author;
 import com.example.demo.mapper.AuthorMapper;
 import com.example.demo.repo.AuthorRepository;
+import com.example.demo.service.AuthorService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class AuthorServiceimpl {
+public class AuthorServiceimpl implements AuthorService {
 
 
     private final AuthorRepository authorRepository;
@@ -35,6 +36,8 @@ public class AuthorServiceimpl {
     public AuthorDto updateAuthor(Long id, AuthorDto dto) {
 
         Author existAuthor = authorRepository.findById(id).orElseThrow(() -> new RuntimeException("not found author with id " + id));
+
+        authorMapper.updateBookFromDto(dto,existAuthor);
 
         Author saved = authorRepository.save(existAuthor);
 

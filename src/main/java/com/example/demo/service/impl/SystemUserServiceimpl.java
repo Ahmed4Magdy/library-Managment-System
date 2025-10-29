@@ -4,6 +4,7 @@ import com.example.demo.Dto.SystemUserDto;
 import com.example.demo.entity.SystemUser;
 import com.example.demo.mapper.SystemUserMapper;
 import com.example.demo.repo.SystemUserRepository;
+import com.example.demo.service.SystemUserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,14 +12,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class SystemUserServiceimpl {
+public class SystemUserServiceimpl implements SystemUserService {
 
     private final SystemUserRepository systemUserRepository;
 
     private final PasswordEncoder passwordEncoder;
 
     private final SystemUserMapper systemUserMapper;
-
 
 
     public SystemUserServiceimpl(SystemUserRepository systemUserRepository, PasswordEncoder passwordEncoder, SystemUserMapper systemUserMapper) {

@@ -18,6 +18,7 @@ public interface PublisherService {
 
     public PublisherDto getPublisherById(Long id);
 
+    public  List<PublisherDto> getAllPublisher();
 
 
 }

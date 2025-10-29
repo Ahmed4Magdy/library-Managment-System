@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.Dto.BorrowTransactionDto;
+import com.example.demo.service.BorrowTransactionService;
 import com.example.demo.service.impl.BorrowTransactionServiceimpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,9 +9,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/borrowwtrasaction")
 public class BorrowTransactionController {
 
-    private final BorrowTransactionServiceimpl borrowTransactionService;
+    private final BorrowTransactionService borrowTransactionService;
 
-    public BorrowTransactionController(BorrowTransactionServiceimpl borrowTransactionService) {
+    public BorrowTransactionController(BorrowTransactionService borrowTransactionService) {
         this.borrowTransactionService = borrowTransactionService;
     }
 

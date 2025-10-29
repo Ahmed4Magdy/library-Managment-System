@@ -4,6 +4,7 @@ import com.example.demo.Dto.MemberDto;
 import com.example.demo.entity.Member;
 import com.example.demo.mapper.MemberMapper;
 import com.example.demo.repo.MemberRepository;
+import com.example.demo.service.MemberService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class MemberServiceimpl {
+public class MemberServiceimpl implements MemberService {
 
 
     private final MemberRepository memberRepository;

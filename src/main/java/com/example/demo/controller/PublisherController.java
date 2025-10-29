@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 
 import com.example.demo.Dto.PublisherDto;
+import com.example.demo.service.PublisherService;
 import com.example.demo.service.impl.PublisherServiceimpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,10 +13,10 @@ import java.util.List;
 public class PublisherController {
 
 
-    private final PublisherServiceimpl publisherService;
+    private final PublisherService publisherService;
 
 
-    public PublisherController(PublisherServiceimpl publisherService) {
+    public PublisherController(PublisherService publisherService) {
         this.publisherService = publisherService;
     }
 
