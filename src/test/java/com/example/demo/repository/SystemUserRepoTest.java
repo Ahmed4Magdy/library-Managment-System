@@ -22,8 +22,27 @@ public class SystemUserRepoTest {
 
         admin = new SystemUser();
         admin.setFull_name("Admin");
+        admin.setEmail("ahmed@gmail.com");
         admin.setUsername("admin-123");
         admin.setRole(SystemUser.Role.ADMIN);
+
+    }
+
+
+    @Test
+    void register() {
+
+        SystemUser saved = systemUserRepository.save(admin);
+        assertThat(saved).isNotNull();
+
+    }
+
+
+    @Test
+    void login() {
+        systemUserRepository.save(admin);
+        SystemUser saved = systemUserRepository.findByEmail(admin.getEmail()).orElseThrow(() -> new RuntimeException("this is email not found"));
+        assertThat(admin.getEmail()).isEqualTo("ahmed@gmail.com");
 
     }
 

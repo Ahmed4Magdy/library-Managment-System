@@ -6,6 +6,7 @@ import com.example.demo.entity.Author;
 import com.example.demo.mapper.AuthorMapper;
 import com.example.demo.repo.AuthorRepository;
 import com.example.demo.service.AuthorService;
+import com.example.demo.service.BookService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

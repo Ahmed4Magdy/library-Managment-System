@@ -25,6 +25,9 @@ public class SystemUser {
 
     private String full_name;
 
+    @Column(nullable = false, unique = true)
+    private String email;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
@@ -32,7 +35,7 @@ public class SystemUser {
     private LocalDateTime created_at = LocalDateTime.now();
 
     public enum Role {
-        ADMIN, LIBRARIAN, STAFF
+        ADMIN, LIBRARIAN, STAFF,MEMBER
     }
 
 

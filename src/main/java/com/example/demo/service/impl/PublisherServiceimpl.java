@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class PublisherServiceimpl  implements PublisherService {
+public class PublisherServiceimpl implements PublisherService {
 
     private final PublisherRepository publisherRepository;
 
