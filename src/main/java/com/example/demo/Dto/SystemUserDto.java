@@ -24,6 +24,7 @@ public class SystemUserDto {
 
     private String full_name;
 
+    private String email;
 
     private SystemUser.Role role;
 

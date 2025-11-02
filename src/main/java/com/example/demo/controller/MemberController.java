@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.Dto.MemberDto;
+import com.example.demo.service.MemberService;
 import com.example.demo.service.impl.MemberServiceimpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +11,7 @@ import java.util.List;
 @RequestMapping("/member")
 public class MemberController {
 
-    private final MemberServiceimpl memberService;
+    private final MemberService memberService;
 
 
     public MemberController(MemberServiceimpl memberService) {

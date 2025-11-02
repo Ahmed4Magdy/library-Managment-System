@@ -9,10 +9,11 @@ import com.example.demo.repo.BookRepository;
 import com.example.demo.repo.BorrowTransactionRepository;
 import com.example.demo.repo.MemberRepository;
 import com.example.demo.repo.SystemUserRepository;
+import com.example.demo.service.BorrowTransactionService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BorrowTransactionServiceimpl {
+public class BorrowTransactionServiceimpl implements BorrowTransactionService {
 
 
     private final BorrowTransactionRepository borrowTransactionRepository;

@@ -1,7 +1,12 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.Dto.LoginDto;
+import com.example.demo.Dto.LoginResponseDto;
+import com.example.demo.Dto.SignupDto;
 import com.example.demo.Dto.SystemUserDto;
+import com.example.demo.entity.SystemUser;
+import com.example.demo.service.SystemUserService;
 import com.example.demo.service.impl.SystemUserServiceimpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,11 +17,28 @@ import java.util.List;
 public class SystemUserController {
 
 
-    private final SystemUserServiceimpl systemUserService;
+    private final SystemUserService systemUserService;
 
 
-    public SystemUserController(SystemUserServiceimpl systemUserService) {
+    public SystemUserController(SystemUserService systemUserService) {
         this.systemUserService = systemUserService;
+    }
+
+
+
+    @PostMapping("/register")
+    public SignupDto register(@RequestBody SignupDto dto) {
+
+         return systemUserService.register(dto);
+
+    }
+
+    @PostMapping("/login")
+    public LoginResponseDto login(@RequestBody LoginDto dto) {
+
+
+        return systemUserService.login(dto);
+
     }
 
 

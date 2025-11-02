@@ -5,13 +5,14 @@ import com.example.demo.Dto.PublisherDto;
 import com.example.demo.entity.Publisher;
 import com.example.demo.mapper.PublisherMapper;
 import com.example.demo.repo.PublisherRepository;
+import com.example.demo.service.PublisherService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class PublisherServiceimpl {
+public class PublisherServiceimpl implements PublisherService {
 
     private final PublisherRepository publisherRepository;
 

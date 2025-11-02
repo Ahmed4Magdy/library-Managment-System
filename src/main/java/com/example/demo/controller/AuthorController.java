@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 
 import com.example.demo.Dto.AuthorDto;
+import com.example.demo.service.AuthorService;
 import com.example.demo.service.impl.AuthorServiceimpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +13,7 @@ import java.util.List;
 public class AuthorController {
 
 
-    private final AuthorServiceimpl authorService;
+    private final AuthorService authorService;
 
 
     public AuthorController(AuthorServiceimpl authorService) {

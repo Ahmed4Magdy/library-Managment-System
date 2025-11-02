@@ -9,13 +9,14 @@ import com.example.demo.repo.AuthorRepository;
 import com.example.demo.repo.BookRepository;
 import com.example.demo.repo.CategoryRepository;
 import com.example.demo.repo.PublisherRepository;
+import com.example.demo.service.BookService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class BookServiceimpl {
+public class BookServiceimpl implements BookService {
 
 
     private final BookRepository bookRepository;

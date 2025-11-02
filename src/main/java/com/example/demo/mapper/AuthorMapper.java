@@ -12,14 +12,14 @@ import org.mapstruct.MappingTarget;
 public interface AuthorMapper {
 
 
-  AuthorDto toDto (Author author);
+    AuthorDto toDto(Author author);
 
-  @Mapping(target = "books" ,ignore = true)
-  @Mapping(target = "id", ignore = true)
-  Author toEntity(AuthorDto dto);
+    @Mapping(target = "books", ignore = true)
+    @Mapping(target = "id", ignore = true)
+    Author toEntity(AuthorDto dto);
 
 
-  @Mapping(target = "id", ignore = true)
-  @Mapping(target = "books" ,ignore = true)
-  void updateBookFromDto(AuthorDto dto, @MappingTarget Author entity);
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "books", ignore = true)
+    void updateBookFromDto(AuthorDto dto, @MappingTarget Author entity);
 }

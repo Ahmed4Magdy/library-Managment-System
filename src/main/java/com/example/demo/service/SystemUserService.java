@@ -1,11 +1,11 @@
 package com.example.demo.service;
 
+import com.example.demo.Dto.LoginDto;
+import com.example.demo.Dto.LoginResponseDto;
+import com.example.demo.Dto.SignupDto;
 import com.example.demo.Dto.SystemUserDto;
-import com.example.demo.entity.SystemUser;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
 public interface SystemUserService {
 
 
@@ -18,5 +18,9 @@ public interface SystemUserService {
     public SystemUserDto getSystemUserById(Long id);
 
     public List<SystemUserDto> getAllSystemUsers();
+
+    public SignupDto register(SignupDto dto);
+
+    public LoginResponseDto login(LoginDto dto);
 
 }
