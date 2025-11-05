@@ -30,56 +30,38 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        //books
-                        .requestMatchers(HttpMethod.GET, "/api/book/**").hasAnyRole("ADMIN", "LIBRARIAN", "STAFF") //or permitall
-                        .requestMatchers(HttpMethod.POST, "/api/book/**").hasAnyRole("ADMIN", "LIBRARIAN")
-                        .requestMatchers(HttpMethod.PUT, "/api/book/**").hasAnyRole("ADMIN", "LIBRARIAN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/book/**").hasRole("ADMIN")
 
-                        // Authors
-                        .requestMatchers(HttpMethod.GET, "/api/author/**").hasAnyRole("ADMIN", "LIBRARIAN", "STAFF")
-                        .requestMatchers(HttpMethod.POST, "/api/author/**").hasAnyRole("ADMIN", "LIBRARIAN")
-                        .requestMatchers(HttpMethod.PUT, "/api/author/**").hasAnyRole("ADMIN", "LIBRARIAN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/author/**").hasRole("ADMIN")
+                        .requestMatchers("/systemuser/register","/systemuser/login").permitAll()
+                        .requestMatchers("/systemuser/add").hasRole("ADMIN")
+                        // ================= LIBRARIAN =================
+                        .requestMatchers(HttpMethod.GET, "/book/**").hasRole("LIBRARIAN")
+                        .requestMatchers(HttpMethod.POST, "/book/**").hasRole("LIBRARIAN")
+                        .requestMatchers(HttpMethod.PUT, "/book/**").hasRole("LIBRARIAN")
+                        .requestMatchers(HttpMethod.DELETE, "/book/**").hasRole("LIBRARIAN")
 
-                        // Publishers
-                        .requestMatchers(HttpMethod.GET, "/api/publisher/**").hasAnyRole("ADMIN", "LIBRARIAN", "STAFF")
-                        .requestMatchers(HttpMethod.POST, "/api/publisher/**").hasAnyRole("ADMIN", "LIBRARIAN")
-                        .requestMatchers(HttpMethod.PUT, "/api/publisher/**").hasAnyRole("ADMIN", "LIBRARIAN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/publisher/**").hasRole("ADMIN")
+                        .requestMatchers("/author/**").hasRole("LIBRARIAN")
+                        .requestMatchers("/publisher/**").hasRole("LIBRARIAN")
+                        .requestMatchers("/category/**").hasRole("LIBRARIAN")
+                        .requestMatchers("/member/**").hasRole("LIBRARIAN")
 
+                        // ================= STAFF =================
+                        .requestMatchers(HttpMethod.GET, "/book/**").hasRole("STAFF")
+                        .requestMatchers("/borrowtransaction/**").hasRole("STAFF")
 
-                        //category
-                        .requestMatchers(HttpMethod.GET, "/api/category/**").hasAnyRole("ADMIN", "LIBRARIAN", "STAFF")
-                        .requestMatchers(HttpMethod.POST, "/api/category/**").hasAnyRole("ADMIN", "LIBRARIAN")
-                        .requestMatchers(HttpMethod.PUT, "/api/category/**").hasAnyRole("ADMIN", "LIBRARIAN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/category/**").hasRole("ADMIN")
+                        // ================= MEMBER =================
+                        .requestMatchers(HttpMethod.GET, "/book/**").hasRole("MEMBER")
+                        .requestMatchers(HttpMethod.GET, "/borrowtransaction/**").hasRole("MEMBER")
 
-                        //member
-                        .requestMatchers(HttpMethod.GET, "/api/member/**").hasAnyRole("ADMIN", "LIBRARIAN", "STAFF")
-                        .requestMatchers(HttpMethod.POST, "/api/member/**").hasAnyRole("ADMIN", "LIBRARIAN")
-                        .requestMatchers(HttpMethod.PUT, "/api/member/**").hasAnyRole("ADMIN", "LIBRARIAN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/member/**").hasRole("ADMIN")
-
-
-                        .requestMatchers(HttpMethod.GET, "/api/borrowwtrasaction/**").hasAnyRole("ADMIN", "STAFF")
-                        .requestMatchers(HttpMethod.POST, "/api/borrowwtrasaction/**").hasAnyRole("ADMIN", "STAFF")
-                        .requestMatchers(HttpMethod.PUT, "/api/borrowwtrasaction/**").hasAnyRole("ADMIN", "STAFF")
-                        .requestMatchers(HttpMethod.DELETE, "/api/borrowwtrasaction/**").hasRole("ADMIN")
-
-
+                        // أي request تاني لازم يكون authenticated
                         .anyRequest().authenticated()
                 )
-                .httpBasic(Customizer.withDefaults()); // Basic Auth
-        return http.build();
-    }
+//                .httpBasic(Customizer.withDefaults());
+                .httpBasic(httpBasic -> httpBasic.disable());
 
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
+
+        return http.build();
+
+
     }
 
     // AuthenticationManager الجديد في Spring Security 6
