@@ -38,7 +38,7 @@ public class PublisherServiceimpl implements PublisherService {
 
     public PublisherDto updatePublisher(Long id, PublisherDto dto) {
 
-        Publisher existpublisher = publisherRepository.findById(id).orElseThrow(() -> new RuntimeException("not found publisher with id" + id));
+        Publisher existpublisher = publisherRepository.findById(id).orElseThrow(() -> new RuntimeException("not found publisher with id " + id));
 
         publisherMapper.updatePublisherFromDto(dto, existpublisher);
 

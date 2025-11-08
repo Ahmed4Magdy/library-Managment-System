@@ -25,7 +25,7 @@ public class AuthorRepoTest {
 
         author = new Author();
         author.setName("hr.tata");
-        authorRepository.save(author);
+        author=authorRepository.save(author);
 
 
     }
@@ -43,7 +43,8 @@ public class AuthorRepoTest {
     @Test
     public void testFindById() {
 
-        Author authorexist = authorRepository.findById(1L).orElseThrow(() -> new RuntimeException("author not found with" + author.getId()));
+        Long id =author.getId();
+        Author authorexist = authorRepository.findById(id).orElseThrow(() -> new RuntimeException("not found author with id " +id));
         assertThat(author.getName()).isEqualTo("hr.tata");
 
     }
@@ -52,7 +53,8 @@ public class AuthorRepoTest {
     @Test
     public void testupdateAuthor() {
 
-        Author authorexist = authorRepository.findById(1L).orElseThrow(() -> new RuntimeException("author not found with" + author.getId()));
+        Long id =author.getId();
+        Author authorexist = authorRepository.findById(id).orElseThrow(() -> new RuntimeException("not found author with id " +id));
         authorexist.setName("hr.ahmedupdate");
         assertThat(authorexist.getName()).isEqualTo("hr.ahmedupdate");
     }

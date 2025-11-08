@@ -74,7 +74,7 @@ public class CategoryServiceTest {
 
 
     @Test
-    void createCategory_NotFound() {
+    void createCategory_NotFoundwithparent() {
 
         dto.setParentId(null);
         when(categoryMapper.toEntity(dto)).thenReturn(category);
@@ -84,7 +84,7 @@ public class CategoryServiceTest {
         CategoryDto result = categoryServiceimpl.addCategory(dto);
 
         assertNotNull(result);
-        assertEquals("Child Category", result.getName());
+        assertEquals("DB", result.getName());
         verify(categoryRepository, times(1)).save(category);
 
 

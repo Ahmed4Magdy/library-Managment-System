@@ -17,6 +17,7 @@ public class PublisherRepoTest {
     private PublisherRepository publisherRepository;
 
     private Publisher publisher;
+
     @BeforeEach
     void setup() {
 
@@ -28,10 +29,11 @@ public class PublisherRepoTest {
 
     @Test
     public void createPublisher() {
-        publisherRepository.save(publisher);
 
-        Publisher publisher1 =publisherRepository.findById(1L).orElseThrow(()-> new RuntimeException("Publisher not found with "+publisher.getId()));
-       assertThat(publisher1.getName()).isEqualTo("ashraf");
+        publisher = publisherRepository.save(publisher);
+        Long id = publisher.getId();
+        Publisher publisher1 = publisherRepository.findById(id).orElseThrow(() -> new RuntimeException("publisher not found with id " + publisher.getId()));
+        assertThat(publisher1.getName()).isEqualTo("ashraf");
     }
 
 }

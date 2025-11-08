@@ -45,6 +45,7 @@ public class BorrowTransactionRepoTest {
 
         librarian = new SystemUser();
         librarian.setFull_name("admin");
+        librarian.setEmail("a7med@gmail.com");
         librarian.setRole(SystemUser.Role.LIBRARIAN);
 
         borrowTransaction1 = new BorrowTransaction();

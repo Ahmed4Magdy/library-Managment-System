@@ -57,6 +57,8 @@ public class SystemUserControllerTest {
         dto = new SystemUserDto();
         dto.setRole(SystemUser.Role.ADMIN);
         dto.setUsername("admin-123");
+        dto.setEmail("ahmed@gmail.com");
+
 
         signupdto = new SignupDto();
         signupdto.setEmail("ahmed@gmail.com");

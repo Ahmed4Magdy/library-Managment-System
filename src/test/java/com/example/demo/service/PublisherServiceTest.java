@@ -65,7 +65,7 @@ public class PublisherServiceTest {
 
 
     @Test
-    void testGetFindAllAuthors() {
+    void testGetFindAllPublishers() {
 
         when(publisherRepository.findAll()).thenReturn(List.of(publisher));
         when(publisherMapper.toDto(publisher)).thenReturn(dto);
@@ -79,33 +79,33 @@ public class PublisherServiceTest {
     }
 
     @Test
-    void testGetAuthorById_Found() {
+    void testGetPublisherById_Found() {
         when(publisherRepository.findById(10L)).thenReturn(Optional.of(publisher));
         when(publisherMapper.toDto(publisher)).thenReturn(dto);
 
         PublisherDto result = publisherServiceimpl.getPublisherById(10L);
 
         assertNotNull(result);
-        assertEquals("eng.ahmed", result.getName());
+        assertEquals("T.A Ahmed", result.getName());
         verify(publisherRepository, times(1)).findById(10L);
     }
 
 
     @Test
-    void testGetAuthorById_NotFound() {
+    void testGetPublisherById_NotFound() {
         when(publisherRepository.findById(1L)).thenReturn(Optional.empty());
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             publisherServiceimpl.getPublisherById(1L);
         });
 
-        assertEquals("not found author with id 1", exception.getMessage());
+        assertEquals("publisher not found with id 1", exception.getMessage());
         verify(publisherRepository, times(1)).findById(1L);
     }
 
 
     @Test
-    void testUpdateAuthor() {
+    void testUpdatePublisher() {
 
         when(publisherRepository.findById(100L)).thenReturn(Optional.of(publisher));
         doNothing().when(publisherMapper).updatePublisherFromDto(dto, publisher);

@@ -62,6 +62,7 @@ public class BorrowTransactionTest {
 
         systemUser = new SystemUser();
         systemUser.setUsername("admin-11");
+        systemUser.setEmail("ahmed@example.com");
         systemUser.setRole(SystemUser.Role.ADMIN);
 
 

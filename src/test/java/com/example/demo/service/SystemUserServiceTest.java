@@ -57,9 +57,11 @@ public class SystemUserServiceTest {
     void setup() {
 
         systemUser = new SystemUser();
+        systemUser.setEmail("ahmed@gmail.com");
         systemUser.setUsername("admin-123");
 
         dto = new SystemUserDto();
+        dto.setEmail("ahmed@gmail.com");
         dto.setUsername("admin-123");
 
 

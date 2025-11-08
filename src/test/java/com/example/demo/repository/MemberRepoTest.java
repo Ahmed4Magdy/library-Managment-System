@@ -36,7 +36,7 @@ public class MemberRepoTest {
 
         memberRepository.save(member);
 
-        Member member1 =memberRepository.findById(member.getId()).orElseThrow(()->new RuntimeException("member not found with"+member.getId()));
+        Member member1 =memberRepository.findById(member.getId()).orElseThrow(()->new RuntimeException("member not found with "+member.getId()));
          assertThat(member1.getFull_name()).isEqualTo("ahmed magdy");
     }
 
